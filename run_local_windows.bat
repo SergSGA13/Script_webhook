@@ -1,0 +1,8 @@
+@echo off
+set SHEET_WEBHOOK_URL=PASTE_WEB_APP_URL_HERE
+set SHEET_SECRET=CHANGE_ME_SECRET_123
+set FUTURES_TOP_N=30
+set FUTURES_HISTORY_DAYS=90
+set FUTURES_INTERVAL=15m
+python sync_futures_to_sheets.py
+pause
