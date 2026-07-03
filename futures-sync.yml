@@ -1,0 +1,30 @@
+name: Futures Strategy Sync
+
+on:
+  schedule:
+    - cron: "0 */2 * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Sync futures strategy to Google Sheets
+        run: python sync_futures_to_sheets.py
+        env:
+          SHEET_WEBHOOK_URL: ${{ secrets.SHEET_WEBHOOK_URL }}
+          SHEET_SECRET: ${{ secrets.SHEET_SECRET }}
+          FUTURES_TOP_N: "30"
+          FUTURES_HISTORY_DAYS: "90"
+          FUTURES_INTERVAL: "15m"
